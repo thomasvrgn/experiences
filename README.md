@@ -10,8 +10,8 @@ This repository contains all my experiences in Javascript and Typescript.
 
 ## ✍️ Authors <a name = "authors"></a>
 
--   [@username](https://github.com/username) - Idea & Initial work
+-   [@NessMC](https://github.com/NessMC) - Idea & Initial work
 
 See also the list of
-[contributors](https://github.com/username/your-project/contributors) who
+[contributors](https://github.com/NessMC/experiences/contributors) who
 participated in this project.
