@@ -1,0 +1,9 @@
+# Node.js files
+node_modules
+package-lock.json
+
+# MacOS files
+.DS_Store
+
+# Build files
+dist
