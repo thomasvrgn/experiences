@@ -58,6 +58,27 @@ export class Parser {
     else if (this.oldTabSize < tabs) this.state = 1;
     const parentsNumber: number = Math.abs(tabs - this.oldTabSize);
     this.oldTabSize = tabs;
+    const trimLine: string = line.trim();
+    if (this.state === 0) ast = this.getParent(ast, parentsNumber);
+    if (trimLine.endsWith(':')) {
+      ast.children.push({
+        type: 'Node',
+        raw: trimLine,
+        line: index,
+        tabs: tabs,
+        children: [],
+        parent: ast,
+      });
+      return this.parse(code, index + 1, ast.children.slice(-1)[0]);
+    }
+    ast.children.push({
+      type: 'Block',
+      raw: trimLine,
+      line: index,
+      tabs: tabs,
+      children: [],
+      parent: ast,
+    });
     return this.parse(code, index + 1, ast);
   }
 }
