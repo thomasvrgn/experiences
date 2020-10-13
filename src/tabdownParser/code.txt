@@ -1,0 +1,10 @@
+if condition1:
+  if condition2:
+    print "test"
+  else:
+    print "no"
+  print "hello world"
+print "Hello Ness"
+
+if test:
+  print "Goodbye!"
