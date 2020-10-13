@@ -14,11 +14,20 @@ export class Parser {
   };
   private tabSize: number = 0;
   private oldTabSize: number = -1;
+  private state: number = -1;
 
   private getSizeTabs(line: string): number {
     if (!this.tabSize) return 0;
     const matched: string[] = line.match(/^\s+/) || [''];
     return matched[0].length / this.tabSize;
+  }
+
+  private getParent(ast: Node, iterations: number): Node {
+    if (iterations === 0) return ast;
+    else {
+      if (!ast.parent) return ast;
+      return this.getParent(ast.parent, iterations - 1);
+    }
   }
 
   private static parse: (code: string, index: number, ast: Node) => (typeof Parser.parse | null);
@@ -38,7 +47,17 @@ export class Parser {
   private parse(code: string[], index: number, ast: Node): typeof Parser.parse | Node {
     const line: string = code[index];
     if (!line) return ast;
-    console.log(line);
+    if (!this.tabSize || this.tabSize === 0) {
+      const matched: string[] = line.match(/^\s+/) || [''];
+      this.tabSize = matched[0].length;
+    }
+    const tabs: number = this.getSizeTabs(line);
+    console.log(tabs, this.oldTabSize, line);
+    if (this.oldTabSize > tabs) this.state = 0
+    else if (this.oldTabSize === tabs) this.state = 2;
+    else if (this.oldTabSize < tabs) this.state = 1;
+    const parentsNumber: number = Math.abs(tabs - this.oldTabSize);
+    this.oldTabSize = tabs;
     return this.parse(code, index + 1, ast);
   }
 }
