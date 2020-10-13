@@ -11,8 +11,11 @@ async function main() {
       console.log('[START] Deno is now watching typescript files...')
       let state = false;
       for await (const event of watcher) {
-        if (state) continue;
-        state = !state;
+        if (state) {
+          state = false;
+          continue;
+        };
+        state = true;
         console.log(`[RUN] File ${event.paths[0].split('/').slice(-1)[0]} ran...`)
         Deno.run({
           cmd: ['deno', 'run', '--allow-read', '--unstable', event.paths[0]]
