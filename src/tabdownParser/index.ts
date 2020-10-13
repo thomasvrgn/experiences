@@ -36,12 +36,13 @@ export class Parser {
     this.path = path;
   }
 
-  public async init() {
+  public async init(): Promise<Node> {
     this.content = await readFile(this.path);
     this.formatted = this.content
       .split(/\r?\n/g)
       .filter((x: string) => x.trim().length > 0);
     this.parse(this.formatted, 0, this.ast);
+    return this.ast;
   }
 
   private parse(code: string[], index: number, ast: Node): typeof Parser.parse | Node {
@@ -81,6 +82,18 @@ export class Parser {
     });
     return this.parse(code, index + 1, ast);
   }
+  public printAST(ast: Node): void {
+    if (!ast) return;
+    for (const child of ast.children) {
+      const tabs: string = new Array(child.tabs).fill(' '.repeat(this.tabSize)).join('');
+      if (child.raw.endsWith(':')) console.log(tabs + child.raw.slice(0, child.raw.length - 1) + ' {');
+      else console.log(tabs + child.raw);
+      this.printAST(child);
+      if (child.raw.endsWith(':')) console.log(tabs + '}');
+    }
+  }
 }
 
-new Parser('./src/tabdownParser/code.txt').init();
+const parser: Parser = new Parser('./src/tabdownParser/code.txt');
+const ast: Node = await parser.init();
+parser.printAST(ast);
