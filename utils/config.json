@@ -1,5 +1,5 @@
 {
   "version": "1.0.5",
-  "defaultPattern": "*.ts",
-  "defaultExtensions": ["ts"]
+  "pattern": "./index.js",
+  "extensions": [".js"]
 }

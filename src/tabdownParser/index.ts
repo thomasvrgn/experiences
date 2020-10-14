@@ -53,7 +53,6 @@ export class Parser {
       this.tabSize = matched[0].length;
     }
     const tabs: number = this.getSizeTabs(line);
-    console.log(tabs, this.oldTabSize, line);
     if (this.oldTabSize > tabs) this.state = 0
     else if (this.oldTabSize === tabs) this.state = 2;
     else if (this.oldTabSize < tabs) this.state = 1;
@@ -82,6 +81,7 @@ export class Parser {
     });
     return this.parse(code, index + 1, ast);
   }
+
   public printAST(ast: Node): void {
     if (!ast) return;
     for (const child of ast.children) {
@@ -96,4 +96,5 @@ export class Parser {
 
 const parser: Parser = new Parser('./src/tabdownParser/code.txt');
 const ast: Node = await parser.init();
-parser.printAST(ast);
+//parser.printAST(ast);
+console.log('Hello world!')
