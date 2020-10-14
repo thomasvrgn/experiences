@@ -17,9 +17,11 @@ async function main() {
         };
         state = true;
         console.log(`[RUN] File ${event.paths[0].split('/').slice(-1)[0]} ran...`)
-        Deno.run({
-          cmd: ['deno', 'run', '--allow-read', '--unstable', event.paths[0]]
-        });
+        const content: Uint8Array = await Deno.run({
+          cmd: ['deno', 'run', '--allow-read', '--unstable', event.paths[0]],
+          stdout: 'piped',
+        }).output();
+        await Deno.stdout.write(content);
         console.log(`[SUCCESS] Clean exit...`)
       }
     } catch (exception) {
