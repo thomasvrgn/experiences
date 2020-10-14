@@ -96,5 +96,4 @@ export class Parser {
 
 const parser: Parser = new Parser('./src/tabdownParser/code.txt');
 const ast: Node = await parser.init();
-//parser.printAST(ast);
-console.log('Hello world!')
+parser.printAST(ast);
