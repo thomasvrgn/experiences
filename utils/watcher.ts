@@ -1,9 +1,5 @@
 import { watch } from './libs/watch.ts';
-import { printConfig } from './libs/printConfig.ts';
+import { print } from './libs/print.ts';
 
-async function main() {
-  await printConfig();
-  await watch();
-}
-
-main()
+await print();
+await watch();
